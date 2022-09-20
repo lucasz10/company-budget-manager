@@ -1,15 +1,14 @@
 // Dependencies
 const inquirer = require('inquirer');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const conTable = require('console.table');
-const { default: InputPrompt } = require('inquirer/lib/prompts/input');
 
 const db = mysql.createConnection(
     {
         hot: 'localhost',
         user: 'root',
         password: 'rootroot',
-        database: 'company_budget_tracker'
+        database: 'company_budget_db'
     },
     console.log('Database connection successful!')
 )
@@ -21,7 +20,7 @@ db.connect(err => {
 
 const startProg = () => {
     inquirer.prompt({
-        name: 'startProg',
+        name: 'startSelect',
         type: 'list',
         message: 'Select an option:',
         choices: [
@@ -35,7 +34,7 @@ const startProg = () => {
             'Quit'
         ]
     }).then((input) => {
-        switch(startProg.input) {
+        switch(input.startSelect) {
             case "View All Departments":
                 viewDepts();
                 break;
@@ -151,7 +150,7 @@ function addDept() {
         }
     ]).then ( inputVal => {
         db.query("INSERT INTO department (name) VALUES (?)", inputVal.newDept, (err, results) => {
-            if(err) throw err;
+            if (err) throw err;
             console.log("Successfully added " + inputVal.newDept + " to database!")
             startProg();
         })
@@ -160,7 +159,7 @@ function addDept() {
 
 function addRole() {
     db.query("SELECT * FROM department", (err, results) => {
-        if(err) throw err;
+        if (err) throw err;
         const depts = results;
         const deptNames = depts.map(dept => dept.name)
 
@@ -211,7 +210,7 @@ function addRole() {
 
 function addEmp() {
     db.query("SELECT id, title FROM role", (err, results) => {
-        if(err) throw err;
+        if (err) throw err;
         const roles = results;
         const roleNames = roles.map(role => role.title)
 
