@@ -18,7 +18,8 @@ db.connect(err => {
     startProg();
 })
 
-const startProg = () => {
+// Initializes program
+function startProg() {
     inquirer.prompt({
         name: 'startSelect',
         type: 'list',
@@ -70,6 +71,8 @@ const startProg = () => {
     })
 }
 
+// Following functions display requested information in console
+
 function viewDepts() {
     db.query('SELECT * FROM department', (err, results) => {
         if (err) throw err;
@@ -94,6 +97,8 @@ function viewEmps() {
     })
 }
 
+// Updates employee role information
+// Note: does not update employee manager. Future development action needed.
 function updateEmp() {
     db.query("SELECT id, first_name, last_name FROM employee", (err, results) => {
         if (err) throw err;
@@ -131,6 +136,8 @@ function updateEmp() {
         })
     })
 }
+
+// Following functions allow user to add information to database
 
 function addDept() {
     inquirer.prompt([
