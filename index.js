@@ -120,7 +120,7 @@ function updateEmp() {
                 },
             ]).then(inputVal => {
                 const empId = emps.filter(emp => (emp.first_name + ' ' + emp.last_name) === inputVal.empName).map(emp => emp.id);
-                const roleId = roles.filter(role => role.title === inputVal.role).map(role => role.id)
+                const roleId = roles.filter(role => role.title === inputVal.newRole).map(role => role.id)
 
                 db.query("UPDATE employee SET role_id = ? WHERE id = ?", [roleId, empId], (err, results) => {
                     if (err) throw err;
