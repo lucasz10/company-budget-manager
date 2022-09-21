@@ -261,7 +261,7 @@ function addEmp() {
                     choices: managerOption,
                 },
             ]).then(inputVal => {
-                const roleId = roles.filter(role => role.title === inputVal.role).map(role => role.id)
+                const roleId = roles.filter(role => role.title === inputVal.empRole).map(role => role.id)
 
                 var managerId;
                 if(inputVal.empManager === "No Manager") {
